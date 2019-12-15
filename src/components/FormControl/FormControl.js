@@ -7,12 +7,12 @@ const FormControl = (props) => {
     switch (props.type) {
         case 'input':
             control = (
-                <input disabled={!props.managable} name={props.name} type="text" value={props.value} onChange={props.managable ? (event) => props.onChange(event.target.name, event.target.value) : null} />
+                <input disabled={!props.managable} name={props.name} type="text" value={props.value} onChange={props.managable ? (event) => props.onChange(props.identifier, event.target.value) : null} />
             )
             break;
         case 'select':
             control = (
-                <select disabled={!props.managable} name={props.name} value={props.value} onChange={props.managable ? (event) => props.onChange(event.target.name, event.target.value) : null}>
+                <select disabled={!props.managable} name={props.name} value={props.value} onChange={props.managable ? (event) => props.onChange(props.identifier, event.target.value) : null}>
                     {props.values.map((value, index) => (
                         <option key={index} value={value}>{value}</option>
                     ))}
@@ -24,7 +24,7 @@ const FormControl = (props) => {
             break;
         default:
             control = (
-                <input disabled={!props.managable} name={props.name} type="text" value={props.value} onChange={props.managable ? (event) => props.onChange(event.target.name, event.target.value) : null} />
+                <input disabled={!props.managable} name={props.name} type="text" value={props.value} onChange={props.managable ? (event) => props.onChange(props.identifier, event.target.value) : null} />
             );
     }
 
