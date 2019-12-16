@@ -29,17 +29,26 @@ const FormControl = (props) => {
     }
 
     let color = 'white';
-    if(props.color) {
+    if (props.color) {
         color = props.color;
     }
+
+    let ControlClassName = [classes.FormControl];
+    if(!props.managable) {
+        ControlClassName.push(classes.MuteControl);
+    }
+    if (props.touched) {
+        ControlClassName = props.valid ? [classes.FormControl, classes.Success] : [classes.FormControl, classes.Error];
+    }
     
+
     return (
-        <tr className={classes.FormControl}>
-            <td>{props.desc}</td>
-            <td>{props.unit}</td>
-            <td>{control}</td>
-            <td>{props.endDesc}</td>
-        </tr>
+        <div className={ControlClassName.join(' ')}>
+            <div>{props.desc}</div>
+            <div>{props.unit}</div>
+            <div>{control}</div>
+            <div>{props.endDesc}</div>
+        </div>
     );
 }
 

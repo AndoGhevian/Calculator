@@ -1,3 +1,93 @@
 .FormControl {
-    
+    height: 50px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    border-top: 2px solid #000000;
 }
+
+.FormControl:first-child {
+    border-top: none;
+}
+
+.FormControl input, .FormControl select {
+    width: 100%;
+    text-align: center;
+}
+
+.FormControl input {
+    border: none;
+    font-size: 20px;
+}
+
+.FormControl input:focus {
+    outline-offset: 0;
+    outline-width: 0
+}
+
+.FormControl input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #ffffff inset;
+}
+
+.FormControl div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    border-right: 1px solid #000000;
+    font-size: 20px;
+}
+
+.FormControl div:first-child {
+    justify-content: flex-start;
+}
+
+.FormControl div:last-child {
+    border-right: none;
+}
+
+.FormControl div:nth-child(1) {
+    width: calc((100% / 12) * 6)
+}
+
+.FormControl div:nth-child(2) {
+    text-align: center;
+    width: calc((100% / 12) * 1)
+}
+
+.FormControl div:nth-child(3) {
+    width: calc((100% / 12) * 3)
+}
+
+.FormControl div:nth-child(4) {
+    text-align: center;
+    width: calc((100% / 12) * 2)
+}
+
+.Error {
+    background-color: #f67280;
+}
+
+.Error input {
+    background-color: #f67280;
+}
+
+.Error input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #f67280 inset;
+}
+
+.Success {
+    background-color: #5ca85c;
+}
+
+.Success input {
+    background-color: #5ca85c;
+}
+
+.Success input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #5ca85c inset;
+}
+
+.Mute {}

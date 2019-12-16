@@ -1,7 +1,20 @@
 .Form {
-
+    border: 2px solid #000000;
 }
 
 .FormContainer {
-    
+    width: 60%;
+    min-width: 600px;
+    min-height: 50vh;
+    margin: 0 auto;
+}
+
+.FormHeader {
+    text-align: center;
+    font-size: 25px;
+    font-weight: 400;
+    border-bottom: 2px solid #000000;
+}
+
+.FormContent {
 }

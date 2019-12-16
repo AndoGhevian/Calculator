@@ -1,12 +1,12 @@
 export const validator = {
     notEmptyString: function (value) {
-        if (value === '') {
+        if (value.trim() === '') {
             return false;
         }
         return true;
     },
     isNumber: function (value) {
-        if (value !== '' && !isNaN(+value)) {
+        if (value.trim() !== '' && !isNaN(+value)) {
             return true;
         }
         return false;
