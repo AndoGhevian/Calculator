@@ -1,6 +1,6 @@
-import validate from '../utils/validate';
-
 // this config file must work (and all configs must work in) design time in webpack, but i`m not dive into webpack deeeple, sooo:) sorry:)
+import * as dependensies from './dependensies';
+
 const formConfig = {
     D1: {
         type: 'select',
@@ -12,10 +12,11 @@ const formConfig = {
             'I am remortgaging',
             'I am moving house'
         ],
+        checked: false,
+        checked: false,
         valid: null,
         validations: ['notEmptyString'],
         touched: false,
-        dependensies: [],
         managable: true,
         desc: 'Type of Customer',
         unit: '',
@@ -30,10 +31,10 @@ const formConfig = {
             'Interest Only',
             'Repayment'
         ],
+        checked: false,
         valid: null,
         validations: ['notEmptyString'],
         touched: false,
-        dependensies: [],
         managable: true,
         desc: 'Repayment Type',
         unit: '',
@@ -44,10 +45,10 @@ const formConfig = {
         valueType: 'number',
         name: 'propertyValue',
         value: '',
+        checked: false,
         valid: null,
         validations: ['isNumber'],
         touched: false,
-        dependensies: [],
         managable: true,
         desc: 'Property Value',
         unit: '£',
@@ -58,10 +59,10 @@ const formConfig = {
         valueType: 'number',
         name: 'depositAmount',
         value: '',
+        checked: false,
         valid: null,
         validations: ['emptyOrNumber'],
         touched: false,
-        dependensies: [],
         managable: true,
         desc: 'Deposit Amount',
         unit: '£',
@@ -72,9 +73,14 @@ const formConfig = {
         valueType: 'number',
         name: 'netPropertyValue',
         value: '',
+        checked: false,
         valid: null,
         validations: ['isNumber'],
-        dependensies: ['D3', 'D4'],
+        dependensies: [
+            'D3',
+            'D4'
+        ],
+        calculationFunction: dependensies.D5,
         managable: false,
         desc: 'Net Property Value',
         unit: '£',
@@ -85,10 +91,10 @@ const formConfig = {
         valueType: 'number',
         name: 'mortgageTerm',
         value: '',
+        checked: false,
         valid: null,
         validations: ['isNumber'],
         touched: false,
-        dependensies: [],
         managable: true,
         desc: 'Mortgage Term',
         unit: '',
@@ -99,9 +105,13 @@ const formConfig = {
         valueType: 'number',
         name: 'mortgageTermMonth',
         value: '',
+        checked: false,
         valid: null,
         validations: ['isNumber'],
-        dependensies: ['D6'],
+        dependensies: [
+            'D6'
+        ],
+        calculationFunction: dependensies.D7,
         managable: false,
         desc: 'Mortgage Term (Months)',
         unit: '',
@@ -112,9 +122,12 @@ const formConfig = {
         valueType: 'number',
         name: 'compoundingPeriodPerYear',
         value: '12',
+        checked: false,
         valid: null,
         validations: ['isNumber'],
-        dependensies: [],
+        dependensies: [
+
+        ],
         managable: false,
         desc: 'Compounding Period Per Year',
         unit: '',
@@ -125,10 +138,10 @@ const formConfig = {
         valueType: 'number',
         name: 'initialInteresRate',
         value: '',
+        checked: false,
         valid: null,
         validations: ['isNumber'],
         touched: false,
-        dependensies: [],
         managable: true,
         desc: 'Initial Interest Rate',
         unit: '',
@@ -143,9 +156,23 @@ const formConfig = {
         name: 'monthlyMortgagePayment',
         color: 'grey',
         value: '',
+        checked: false,
         valid: null,
         validations: ['isNumber'],
-        dependensies: ['D1', 'D2', 'D3', 'D5', 'D7', 'D8', 'D9'],
+        dependensies: [
+            'D1',
+            'D2',
+            'D3',
+            'D5',
+            'D7',
+            'D8',
+            'D9'
+        ],
+        mapDependensies: (dependensiesMap) => ({
+            D1: { values: dependensiesMap.D1.values },
+            D2: { values: dependensiesMap.D2.values }
+        }),
+        calculationFunction: dependensies.D11,
         managable: false,
         desc: 'Monthly Mortgage Payment',
         unit: '£',
@@ -157,9 +184,14 @@ const formConfig = {
         name: 'totalMortgageCostWithInterest',
         color: 'grey',
         value: '',
+        checked: false,
         valid: null,
         validations: ['isNumber'],
-        dependensies: ['D7', 'D11'],
+        dependensies: [
+            'D7',
+            'D11'
+        ],
+        calculationFunction: dependensies.D12,
         managable: false,
         desc: 'Total Mortgage Cost (with interest)',
         unit: '£',
@@ -174,9 +206,14 @@ const formConfig = {
         name: 'loanToValueLTV',
         color: 'grey',
         value: '',
+        checked: false,
         valid: null,
         validations: ['isNumber'],
-        dependensies: ['D5', 'D12'],
+        dependensies: [
+            'D5',
+            'D12'
+        ],
+        calculationFunction: dependensies.D14,
         managable: false,
         desc: 'Loan to Value (LTV)',
         unit: '',
@@ -188,9 +225,21 @@ const formConfig = {
         name: 'totalMortgageCostInInterestOnlyCase',
         color: 'grey',
         value: '',
+        checked: false,
         valid: null,
         validations: ['isNumber'],
-        dependensies: ['D1', 'D2', 'D3', 'D5', 'D12'],
+        dependensies: [
+            'D1',
+            'D2',
+            'D3',
+            'D5',
+            'D12'
+        ],
+        mapDependensies: (dependensiesMap) => ({
+            D1: { values: dependensiesMap.D1.values },
+            D2: { values: dependensiesMap.D2.values }
+        }),
+        calculationFunction: dependensies.D15,
         managable: false,
         desc: 'Total Mortgage Cost (in Interest Only Case)',
         unit: '£',
@@ -198,45 +247,13 @@ const formConfig = {
     },
 }
 
-export function validValue(form, identifier) {
-    const validations = form[identifier].validations;
-    const value = form[identifier].value;
-    if (identifier === 'D5') {
-        // debugger
-
-    }
-    const isValid = validate(value, validations)
-    return isValid;
-}
-
-export function validDependensies(form, identifier) {
-    const dependensies = form[identifier].dependensies;
-    // debugger
-    const isInvalid = dependensies.some(dep => {
-        // if (identifier === 'D11')
-        // debugger
-        return !validValue(form, dep)
-    });
-    return !isInvalid;
-}
-
-export function getValue(form, identifier) {
-    switch (form[identifier].valueType) {
-        case 'string':
-            return form[identifier].value + '';
-        case 'number':
-            return +form[identifier].value;
-        default: return form[identifier].value;
-    }
-}
-
 export function getNewForm() {
     const newForm = { ...formConfig };
-    Object.keys(newForm).forEach(property => {
-        if (typeof newForm[property] === 'object') {
-            Array.isArray(newForm[property]) ?
-                newForm[property] = [...newForm[property]] :
-                newForm[property] = { ...newForm[property] };
+    Object.keys(newForm).forEach(identifier => {
+        if (typeof newForm[identifier] === 'object') {
+            Array.isArray(newForm[identifier]) ?
+                newForm[identifier] = [...newForm[identifier]] :
+                newForm[identifier] = { ...newForm[identifier] };
         }
     });
     return newForm;

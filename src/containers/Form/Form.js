@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 
-import calculate from '../../utils/calculate';
+import {default as calculate, getNewForm} from '../../config/form/index';
 import FormControl from '../../components/FormControl/FormControl'
 import classes from './Form.module.css';
 
-import { getNewForm, validValue } from '../../config/form';
 
 class App extends Component {
     state = {
@@ -12,14 +11,13 @@ class App extends Component {
     }
 
     onChangeHandler = (identifier, value) => {
-        const form = { ...this.state.form };
-        form[identifier] = { ...form[identifier] };
-        form[identifier].value = value;
-        form[identifier].touched = true;
-        form[identifier].valid = validValue(form, identifier);
-        // debugger
-        const finalForm = calculate(form, ['D5', 'D7', 'D11', 'D12', 'D14', 'D15']);
-        this.setState({ form: finalForm });
+        const changedForm = { ...this.state.form };
+        changedForm[identifier] = { ...changedForm[identifier] };
+        changedForm[identifier].value = value;
+        changedForm[identifier].touched = true;
+
+        const calculatedForm = calculate(changedForm)
+        this.setState({ form: calculatedForm });
     }
 
     render() {

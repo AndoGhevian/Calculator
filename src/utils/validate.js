@@ -20,9 +20,11 @@ export const validator = {
 }
 
 export function validate(value, validations) {
-    // debugger
+    if(!validations || (typeof validations === 'object' && (!validations.length || !Object.keys(validations).length))) {
+        return true;
+    }
+    
     const isInvalide = validations.some(name => {
-        console.log(name);
         return !validator[name](value);
     })
 
